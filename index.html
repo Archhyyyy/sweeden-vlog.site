@@ -7,7 +7,7 @@
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
     
-    body { background: #07090e; color: #fff; min-height: 100vh; overflow: hidden; position: relative; }
+    body { background: #07090e; color: #fff; min-height: 100vh; overflow-x: hidden; position: relative; }
 
     /* ВЕРХНЯЯ ПАНЕЛЬ С НАЗВАНИЕМ И КНОПКАМИ */
     .top-panel {
@@ -27,7 +27,7 @@
     .buttons { display: flex; gap: 15px; }
 
     button {
-        background: #161b26; color: #e2e8f0; border: 1px solid #2d3748;
+        background: rgba(255, 255, 255, 0.05); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2);
         padding: 10px 20px; font-size: 14px; border-radius: 8px; cursor: pointer;
         transition: all 0.2s ease; font-weight: 700; text-transform: uppercase;
     }
@@ -37,79 +37,28 @@
         box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); transform: translateY(-2px);
     }
 
-    /* АНИМИРОВАННЫЙ ФОН НА ВЕСЬ ЭКРАН */
-    .garage-scene {
+    /* ПОЛНОЭКРАННЫЙ РЕАЛИСТИЧНЫЙ ФОН */
+    .main-background {
         position: absolute; top: 75px; left: 0; width: 100%; height: calc(100vh - 75px);
-        background: radial-gradient(circle at 50% 50%, #172033 0%, #07090e 100%);
-        z-index: 1; overflow: hidden;
+        background: 
+            linear-gradient(rgba(10, 15, 30, 0.65), rgba(10, 15, 30, 0.75)),
+            url('https://unsplash.com') center/cover no-repeat;
+        z-index: 1;
     }
 
-    /* Гаражные ворота, уезжающие вверх */
-    .garage-gate {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: repeating-linear-gradient(0deg, #2d3748, #2d3748 30px, #1a202c 30px, #1a202c 60px);
-        border-bottom: 8px solid #00f3ff; box-shadow: 0 10px 30px rgba(0,243,255,0.3);
-        z-index: 10; animation: gateUp 4s cubic-bezier(0.77, 0, 0.175, 1) forwards; animation-delay: 0.5s;
-    }
-    @keyframes gateUp { 0% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
-
-    /* Силуэт заезжающей Toyota */
-    .toyota-car {
-        position: absolute; bottom: 120px; left: -300px; width: 420px; height: 160px;
-        background: linear-gradient(to top, #090d16, #1f293d);
-        clip-path: polygon(18% 100%, 10% 65%, 28% 50%, 42% 25%, 72% 25%, 84% 50%, 95% 65%, 88% 100%);
-        z-index: 2; animation: carDrive 5s cubic-bezier(0.1, 0.8, 0.3, 1) forwards; animation-delay: 2.5s;
-        border-top: 2px solid rgba(0, 243, 255, 0.3);
-    }
-    @keyframes carDrive { 0% { left: -450px; } 100% { left: calc(50% - 210px); } }
-
-    /* Фары автомобиля */
-    .headlights { position: absolute; bottom: 45px; width: 100%; display: flex; justify-content: space-between; padding: 0 40px; }
-    .led { width: 24px; height: 10px; background: #fff; border-radius: 50%; box-shadow: 0 0 50px 20px #fff, 0 0 20px #00f3ff; }
-
-    /* СТОЛ РАДИОМЕХАНИКА (ПЕРЕДНИЙ ПЛАН) */
-    .workbench {
-        position: absolute; bottom: 0; left: 0; width: 100%; height: 130px;
-        background: #090d16; border-top: 4px solid #ff5500;
-        z-index: 5; box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
-        display: flex; justify-content: space-around; align-items: center; padding: 0 10%;
-    }
-
-    /* Осциллограф с бегущей волной */
-    .oscilloscope { width: 120px; height: 70px; background: #020f08; border: 3px solid #4a5568; border-radius: 6px; position: relative; overflow: hidden; box-shadow: 0 0 15px rgba(16,185,129,0.2); }
-    .wave { position: absolute; width: 200%; height: 100%; background: linear-gradient(90deg, transparent, #10b981 50%, transparent); top: 0; left: -100%; animation: waveMove 1.5s linear infinite; opacity: 0.8; border-bottom: 2px solid #10b981; transform: translateY(15px); }
-    @keyframes waveMove { 0% { left: -100%; } 100% { left: 100%; } }
-
-    /* Паяльник с живым дымом */
-    .soldering-station { position: relative; width: 80px; height: 20px; background: #2d3748; border-radius: 4px; }
-    .iron-tip { position: absolute; left: -30px; top: 6px; width: 45px; height: 6px; background: #718096; border-radius: 2px; }
-    .iron-tip::before { content: ''; position: absolute; left: -8px; top: 1px; width: 10px; height: 4px; background: #ffaa00; box-shadow: 0 0 10px #ff5500; }
-    
-    .smoke-particles { position: absolute; left: -15px; top: -10px; width: 30px; height: 30px; }
-    .smoke-puff {
-        position: absolute; width: 15px; height: 15px; background: radial-gradient(circle, rgba(255,255,255,0.25) 0%, transparent 70%);
-        filter: blur(4px); border-radius: 50%; animation: smokeRise 2.5s infinite ease-out; opacity: 0;
-    }
-    .smoke-puff:nth-child(2) { animation-delay: 0.8s; left: 5px; }
-    .smoke-puff:nth-child(3) { animation-delay: 1.6s; left: -5px; }
-    @keyframes smokeRise {
-        0% { transform: translateY(0) scale(1); opacity: 0.4; }
-        50% { transform: translateY(-40px) scale(1.8); opacity: 0.2; }
-        100% { transform: translateY(-80px) scale(2.5); opacity: 0; }
-    }
-
-    /* РАСКРЫВАЮЩИЕСЯ ИНФО-ОКНА (ПОВЕРХ СЦЕНЫ) */
+    /* РАСКРЫВАЮЩИЕСЯ ИНФО-ОКНА */
     .info-window {
-        display: none; position: absolute; top: 110px; left: 50%; transform: translateX(-50%);
-        width: 90%; max-width: 550px; background: rgba(20, 27, 45, 0.92);
-        border: 1px solid #222f47; border-top: 3px solid #ff5500; padding: 25px; border-radius: 12px;
-        box-shadow: 0 20px 40px rgba(0,0,0,0.7); z-index: 20; animation: fadeIn 0.3s ease-out;
+        display: none; position: absolute; top: 120px; left: 50%; transform: translateX(-50%);
+        width: 90%; max-width: 550px; background: rgba(15, 22, 38, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1); border-top: 3px solid #ff5500; padding: 30px; border-radius: 16px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.8); z-index: 20; animation: fadeIn 0.3s ease-out;
     }
     .info-window.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
 
-    .info-window h2 { font-size: 20px; color: #fff; margin-bottom: 15px; border-bottom: 2px solid #e60000; padding-bottom: 5px; display: inline-block; }
-    .info-window p { color: #cbd5e1; font-size: 15px; margin: 10px 0; display: flex; justify-content: space-between; }
+    .info-window h2 { font-size: 22px; color: #fff; margin-bottom: 20px; border-bottom: 2px solid #e60000; padding-bottom: 5px; display: inline-block; text-transform: uppercase; letter-spacing: 1px; }
+    .info-window p { color: #cbd5e1; font-size: 16px; margin: 14px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px; }
+    .info-window p:last-of-type { border-bottom: none; }
     .info-window strong { color: #00f3ff; }
 </style>
 </head>
@@ -125,37 +74,12 @@
     </div>
 </div>
 
-<!-- ЖИВАЯ АНИМАЦИОННАЯ СЦЕНА В ГАРАЖЕ -->
-<div class="garage-scene">
-    <!-- Ворота (уедут вверх) -->
-    <div class="garage-gate"></div>
-    
-    <!-- Машина (заедет слева в центр) -->
-    <div class="toyota-car">
-        <div class="headlights">
-            <div class="led"></div>
-            <div class="led"></div>
-        </div>
-    </div>
-
-    <!-- Стол приборов (на переднем плане) -->
-    <div class="workbench">
-        <div class="oscilloscope"><div class="wave"></div></div>
-        <div style="font-family: monospace; color: #4a5568; font-size: 12px;">[STATION_72_ACTIVE]</div>
-        <div class="soldering-station">
-            <div class="iron-tip"></div>
-            <div class="smoke-particles">
-                <div class="smoke-puff"></div>
-                <div class="smoke-puff"></div>
-                <div class="smoke-puff"></div>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- НАСТОЯЩИЙ ФОН РАДИОЛАБОРАТОРИИ -->
+<div class="main-background"></div>
 
 <!-- ИНФОРМАЦИОННЫЕ ОКНА -->
 <div id="price" class="info-window">
-    <h2>Прайс-лист</h2>
+    <h2>Прайс-лист на услуги</h2>
     <p><span>Диагностика блоков и систем</span> <strong>1 500 ₽</strong></p>
     <p><span>Ремонт плат блоков управления (ЭБУ)</span> <strong>от 5 000 ₽</strong></p>
     <p><span>Восстановление блоков ABS / AirBag</span> <strong>от 4 000 ₽</strong></p>
@@ -163,16 +87,16 @@
 </div>
 
 <div id="location" class="info-window">
-    <h2>Расположение</h2>
-    <p>Ремонт электроники выполняется в закрытом оборудованном боксе.</p>
+    <h2>Расположение мастерской</h2>
+    <p style="border: none; color: #94a3b8;">Ремонт автоэлектроники выполняется в закрытом оборудованном боксе строго по предварительной записи.</p>
     <p><strong>Адрес: г. Тюмень, ул. Инженерная, бокс 72</strong></p>
 </div>
 
 <div id="contacts" class="info-window">
-    <h2>Контакты</h2>
-    <p>Пишите в мессенджеры, если мастер занят паяльными работами.</p>
+    <h2>Контакты для связи</h2>
+    <p style="border: none; color: #94a3b8;">Пожалуйста, пишите в мессенджеры перед звонком, если мастер занят пайкой.</p>
     <p><span>Телефон / Telegram:</span> <strong>+7 (999) 000-72-72</strong></p>
-    <p><span>Режим:</span> <strong>Пн-Сб: 10:00 — 20:00</strong></p>
+    <p><span>Режим работы:</span> <strong>Пн-Сб: 10:00 — 20:00</strong></p>
 </div>
 
 <script>
