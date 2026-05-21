@@ -1,1 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pajalnik 72 — Лаборатория автоэлектроники</title>
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+    
+    body { background: #07090e; color: #fff; min-height: 100vh; overflow: hidden; position: relative; }
 
+    /* ВЕРХНЯЯ ПАНЕЛЬ С НАЗВАНИЕМ И КНОПКАМИ */
+    .top-panel {
+        position: fixed; top: 0; left: 0; width: 100%; height: 75px;
+        background: rgba(11, 15, 25, 0.85); backdrop-filter: blur(10px);
+        border-bottom: 2px solid #e60000; box-shadow: 0 5px 25px rgba(0,0,0,0.6);
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 0 40px; z-index: 100;
+    }
+
+    /* ЛОГОТИП: КРУПНЕЕ, СДВИНУТ ПРАВЕЕ И НЕОНОВО-КРАСНЫЙ ПЕРЕЛИВ */
+    .logo {
+        font-size: 38px; 
+        font-weight: 900; 
+        letter-spacing: 2px; 
+        text-transform: uppercase;
+        margin-left: 30px; 
+        background: linear-gradient(135deg, #fff 10%, #990000 50%, #cc0000 90%);
+        background-size: 200% auto;
+        -webkit-background-clip: text; 
+        -webkit-text-fill-color: transparent;
+        animation: slowGlow 6s ease infinite;
+    }
+
+    @keyframes slowGlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .buttons { display: flex; gap: 15px; }
+
+    button {
+        background: rgba(255, 255, 255, 0.05); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2);
+        padding: 10px 20px; font-size: 14px; border-radius: 8px; cursor: pointer;
+        transition: all 0.2s ease; font-weight: 700; text-transform: uppercase;
+    }
+
+    button:hover {
+        background: #e60000; border-color: #ff5500; color: #fff;
+        box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); transform: translateY(-2px);
+    }
+
+    /* ФОН С КАРТИНКОЙ */
+    .garage-scene {
+        position: absolute; top: 75px; left: 0; width: 100%; height: calc(100vh - 75px);
+        background: url('porsche.jpg') center/cover no-repeat;
+        z-index: 1; overflow: hidden;
+    }
+
+    /* Гаражные ворота, уезжающие вверх */
+    .garage-gate {
+        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        background: repeating-linear-gradient(0deg, #2d3748, #2d3748 30px, #1a202c 30px, #1a202c 60px);
+        border-bottom: 8px solid #00f3ff; box-shadow: 0 10px 30px rgba(0,243,255,0.4);
+        z-index: 10; animation: gateUp 4s cubic-bezier(0.77, 0, 0.175, 1) forwards; animation-delay: 0.5s;
+    }
+    @keyframes gateUp { 0% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
+
+    /* РАСКРЫВАЮЩИЕСЯ ИНФО-ОКНА */
+    .info-window {
+        display: none; position: absolute; top: 120px; left: 50%; transform: translateX(-50%);
+        width: 90%; max-width: 550px; background: rgba(15, 22, 38, 0.95);
+        border: 1px solid rgba(255, 255, 255, 0.1); border-top: 3px solid #ff5500; padding: 30px; border-radius: 16px;
+        box-shadow: 0 25px 50px rgba(0,0,0,0.8); z-index: 20; animation: fadeIn 0.3s ease-out;
+    }
+    .info-window.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translate(-50%, -10px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+    .info-window h2 { font-size: 22px; color: #fff; margin-bottom: 20px; border-bottom: 2px solid #e60000; padding-bottom: 5px; display: inline-block; text-transform: uppercase; letter-spacing: 1px; }
+    .info-window p { color: #cbd5e1; font-size: 16px; margin: 14px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px; }
+    .info-window p:last-of-type { border-bottom: none; }
+    .info-window strong { color: #00f3ff; }
+</style>
+</head>
+<body>
+
+<!-- ВЕРХНЯЯ НАВИГАЦИЯ -->
+<div class="top-panel">
+    <div class="logo">Pajalnik 72</div>
+    <div class="buttons">
+        <button onclick="toggleWindow('price')">Прайс</button>
+        <button onclick="toggleWindow('location')">Где бокс</button>
+        <button onclick="toggleWindow('contacts')">Контакты</button>
+    </div>
+</div>
+
+<!-- ЖИВАЯ СЦЕНА -->
+<div class="garage-scene">
+    <div class="garage-gate"></div>
+</div>
+
+<!-- ИНФОРМАЦИОННЫЕ ОКНА -->
+<div id="price" class="info-window">
+    <h2>Прайс-лист на услуги</h2>
+    <p><span>Диагностика систем и блоков</span> <strong>1 500 ₽</strong></p>
+    <p><span>Ремонт и пайка плат ЭБУ (ECU)</span> <strong>от 5 000 ₽</strong></p>
+    <p><span>Восстановление модулей ABS / AirBag</span> <strong>от 4 000 ₽</strong></p>
+    <p><span>Ремонт автоключей и брелоков</span> <strong>от 1 000 ₽</strong></p>
+</div>
+
+<div id="location" class="info-window">
+    <h2>Расположение мастерской</h2>
+    <p style="border: none; color: #94a3b8;">Ремонт сложной автоэлектроники выполняется в закрытом боксе строго по предварительной записи.</p>
+    <p><strong>Адрес: г. Тюмень, ул. Инженерная, бокс 72</strong></p>
+</div>
+
+<div id="contacts" class="info-window">
+    <h2>Контакты для связи</h2>
+    <p style="border: none; color: #94a3b8;">Пожалуйста, пишите в мессенджеры перед звонком, если мастер занят паяльными работами.</p>
+    <p><span>Телефон / Telegram:</span> <strong>+7 (999) 000-72-72</strong></p>
+    <p><span>Режим работы:</span> <strong>Пн-Сб: 10:00 — 20:00</strong></p>
+</div>
+
+<script>
+function toggleWindow(id) {
+    let windows = document.querySelectorAll('.info-window');
+    let target = document.getElementById(id);
+    let isActive = target.classList.contains('active');
+    
+    windows.forEach(win => win.classList.remove('active'));
+    if (!isActive) target.classList.add('active');
+}
+</script>
+
+</body>
+</html>
