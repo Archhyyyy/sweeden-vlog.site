@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECU Pro Lab — Ремонт автоэлектроники & Чип-Тюнинг</title>
+    <style>
+        :root { --neon-cyan: #00f3ff; --neon-orange: #ff3c00; --dark-bg: #0a0c10; --panel-bg: #131722; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background-color: var(--dark-bg); color: #e2e8f0; overflow-x: hidden; }
+        
+        /* ИИ-Графика: Симуляция гаражного бокса и заезжающей машины */
+        .hero-section { 
+            position: relative; min-height: 75vh; background: radial-gradient(circle at 50% 100%, #1e2640 0%, var(--dark-bg) 70%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 20px;
+        }
+        /* Векторный футуристичный гараж с авто внутри от ИИ */
+        .cyber-garage { width: 100%; max-width: 600px; height: 280px; margin-top: 30px; position: relative; }
+        .garage-bg {
+            width: 100%; height: 100%; background: linear-gradient(180deg, #111 60%, #222 100%);
+            border: 4px solid #334155; border-bottom: none; border-radius: 20px 20px 0 0; position: relative; overflow: hidden;
+        }
+        /* Поднятые ворота */
+        .shutter-door { position: absolute; top: 0; left: 0; width: 100%; height: 25px; background: repeating-linear-gradient(0deg, #475569, #475569 5px, #1e293b 5px, #1e293b 10px); border-bottom: 3px solid var(--neon-cyan); box-shadow: 0 5px 20px rgba(0,243,255,0.3); }
+        /* Силуэт Toyota */
+        .toyota-silhouette {
+            position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 260px; height: 110px;
+            background: radial-gradient(ellipse at top, #2d3748, #0f172a); clip-path: polygon(15% 100%, 10% 75%, 23% 60%, 35% 35%, 65% 35%, 77% 60%, 90% 75%, 85% 100%);
+            border-top: 2px solid var(--neon-cyan); box-shadow: 0 0 30px rgba(0,243,255,0.2);
+        }
+        .headlights { position: absolute; bottom: 35px; width: 100%; display: flex; justify-content: space-between; padding: 0 45px; box-sizing: border-box; }
+        .light { width: 22px; height: 10px; background: #fff; border-radius: 50%; box-shadow: 0 0 40px 15px rgba(255,255,255,0.8), 0 0 15px var(--neon-cyan); }
+        
+        /* Лабораторный стол на переднем плане */
+        .workbench {
+            position: absolute; bottom: 0; width: 100%; height: 60px; background: #0f172a; border-top: 4px solid var(--neon-orange);
+            display: flex; justify-content: space-around; align-items: center; z-index: 10; box-shadow: 0 -10px 30px rgba(255,60,0,0.15);
+        }
+        .scope-screen { width: 70px; height: 35px; background: #041e10; border: 2px solid #10b981; border-radius: 4px; position: relative; overflow: hidden; }
+        .scope-wave { position: absolute; width: 200%; height: 100%; background: linear-gradient(90deg, transparent, #10b981 50%, transparent); top: 0; left: -100%; animation: wave 2s linear infinite; opacity: 0.7; }
+        @keyframes wave { 0% { left: -100%; } 100% { left: 100%; } }
+        .soldering-iron { width: 40px; height: 8px; background: #475569; border-radius: 4px; position: relative; }
+        .soldering-iron::after { content: ''; position: absolute; right: -10px; top: 2px; width: 12px; height: 3px; background: #ffaa00; box-shadow: 0 0 10px #ff3c00; }
+
+        /* Контентная часть */
+        header h1 { font-size: 2.5rem; font-weight: 800; margin: 0; background: linear-gradient(135deg, #fff 30%, var(--neon-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        header p { color: #94a3b8; font-size: 1.1rem; margin-top: 10px; }
+        .container { max-width: 800px; margin: -40px auto 40px auto; padding: 30px; background: var(--panel-bg); border-radius: 16px; border: 1px solid #1e293b; position: relative; z-index: 20; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; text-align: left; margin-top: 30px; }
+        .card { background: #1a202c; padding: 20px; border-radius: 12px; border-left: 4px solid var(--neon-cyan); }
+        .card.orange { border-left-color: var(--neon-orange); }
+        .card h3 { margin: 0 0 10px 0; color: #fff; }
+        .price-row { display: flex; justify-content: space-between; margin: 12px 0; font-size: 0.95rem; border-bottom: 1px solid #2d3748; padding-bottom: 6px; }
+        .price { color: var(--neon-cyan); font-weight: bold; }
+        footer { padding: 30px; background: #07090e; color: #475569; font-size: 0.85rem; border-top: 1px solid #131722; }
+    </style>
+</head>
+<body>
+
+    <div class="hero-section">
+        <header>
+            <h1>LAB-AUTO ELECTRONICS</h1>
+            <p>Инженерный бокс №72. Чип-тюнинг, программирование ЭБУ и ремонт автоэлектроники</p>
+        </header>
+
+        <!-- Весь этот блок красиво нарисует бокс, тойоту с фарами и приборы БЕЗ картинок -->
+        <div class="cyber-garage">
+            <div class="garage-bg">
+                <div class="shutter-door"></div>
+                <div class="toyota-silhouette">
+                    <div class="headlights">
+                        <div class="light"></div>
+                        <div class="light"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="workbench">
+                <div style="color: #64748b; font-size: 11px; font-family: monospace;">[DIAGNOSTIC_STATION]</div>
+                <div class="scope-screen"><div class="scope-wave"></div></div>
+                <div class="soldering-iron"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>Профессиональное восстановление автомобильных блоков управления</h2>
+        <p>Специализированная лаборатория по компонентному ремонту бортовых компьютеров, модулей комфорта и систем безопасности. Работаем на дилерском диагностическом и паяльном оборудовании.</p>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>Электроника и Пайка</h3>
+                <div class="price-row"><span>Ремонт плат блоков управления (ЭБУ/ECU)</span> <span class="price">от 6 000 ₽</span></div>
+                <div class="price-row"><span>Восстановление блоков ABS / SRS / ESP</span> <span class="price">от 4 500 ₽</span></div>
+                <div class="price-row"><span>Замена BGA/SMD чипов и процессоров</span> <span class="price">от 3 500 ₽</span></div>
+            </div>
+            <div class="card orange">
+                <h3>Программирование</h3>
+                <div class="price-row"><span>Чип-тюнинг (Stage 1, Euro 2)</span> <span class="price">от 7 000 ₽</span></div>
+                <div class="price-row"><span>Прошивка иммобилайзеров и ключей</span> <span class="price">от 4 000 ₽</span></div>
+                <div class="price-row"><span>Кодирование и адаптация блоков</span> <span class="price">от 2 500 ₽</span></div>
+            </div>
+        </div>
+        <p style="margin-top: 30px; font-size: 0.9rem; color: #94a3b8;">* Прием автомобилей в работу осуществляется строго по предварительной записи в бокс.</p>
+    </div>
+
+    <footer>
+        <p>© 2026 Автомобильная Лаборатория Электроники. Все права защищены. Сайт-визитка мастерской.</p>
+    </footer>
+
+</body>
+</html>
