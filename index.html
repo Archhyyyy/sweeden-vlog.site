@@ -7,7 +7,7 @@
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
     
-    body { background: #07090e; color: #fff; min-height: 100vh; overflow-x: hidden; position: relative; }
+    body { background: #07090e; color: #fff; min-height: 100vh; overflow: hidden; position: relative; }
 
     /* ВЕРХНЯЯ ПАНЕЛЬ С НАЗВАНИЕМ И КНОПКАМИ */
     .top-panel {
@@ -37,19 +37,18 @@
         box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); transform: translateY(-2px);
     }
 
-    /* ПОЛНОЭКРАННЫЙ РЕАЛИСТИЧНЫЙ ФОН МАСТЕРСКОЙ */
+    /* ФОН, КОТОРЫЙ ПОДКЛЮЧАЕТ ВАШУ КАРТИНКУ ИЗ ПРОЕКТА */
     .garage-scene {
         position: absolute; top: 75px; left: 0; width: 100%; height: calc(100vh - 75px);
-        background: 
-            linear-gradient(rgba(10, 15, 30, 0.4), rgba(10, 15, 30, 0.6)),
-            url('https://unsplash.com') center/cover no-repeat;
+        /* Код берет картинку porsche.jpg, которую вы загрузили на первом шаге */
+        background: url('porsche.jpg') center/cover no-repeat;
         z-index: 1; overflow: hidden;
     }
 
     /* Гаражные ворота, уезжающие вверх */
     .garage-gate {
         position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: repeating-linear-gradient(0deg, #334155, #334155 30px, #1e293b 30px, #1e293b 60px);
+        background: repeating-linear-gradient(0deg, #2d3748, #2d3748 30px, #1a202c 30px, #1a202c 60px);
         border-bottom: 8px solid #00f3ff; box-shadow: 0 10px 30px rgba(0,243,255,0.4);
         z-index: 10; animation: gateUp 4s cubic-bezier(0.77, 0, 0.175, 1) forwards; animation-delay: 0.5s;
     }
@@ -83,7 +82,7 @@
     </div>
 </div>
 
-<!-- ЖИВАЯ СЦЕНА (ОТКРЫВАЮТСЯ ВОРОТА, ЗА НИМИ РЕАЛЬНОЕ ФОТО) -->
+<!-- ЖИВАЯ СЦЕНА (ОТКРЫВАЮТСЯ ВОРОТА, ЗА НИМИ ВАШ PORSCHE) -->
 <div class="garage-scene">
     <div class="garage-gate"></div>
 </div>
@@ -91,21 +90,21 @@
 <!-- ИНФОРМАЦИОННЫЕ ОКНА -->
 <div id="price" class="info-window">
     <h2>Прайс-лист на услуги</h2>
-    <p><span>Диагностика блоков и систем</span> <strong>1 500 ₽</strong></p>
-    <p><span>Ремонт плат блоков управления (ЭБУ)</span> <strong>от 5 000 ₽</strong></p>
-    <p><span>Восстановление блоков ABS / AirBag</span> <strong>от 4 000 ₽</strong></p>
+    <p><span>Диагностика систем и блоков</span> <strong>1 500 ₽</strong></p>
+    <p><span>Ремонт и пайка плат ЭБУ (ECU)</span> <strong>от 5 000 ₽</strong></p>
+    <p><span>Восстановление модулей ABS / AirBag</span> <strong>от 4 000 ₽</strong></p>
     <p><span>Ремонт автоключей и брелоков</span> <strong>от 1 000 ₽</strong></p>
 </div>
 
 <div id="location" class="info-window">
     <h2>Расположение мастерской</h2>
-    <p style="border: none; color: #94a3b8;">Ремонт автоэлектроники выполняется в закрытом оборудованном боксе строго по предварительной записи.</p>
+    <p style="border: none; color: #94a3b8;">Ремонт сложной автоэлектроники выполняется в закрытом боксе строго по предварительной записи.</p>
     <p><strong>Адрес: г. Тюмень, ул. Инженерная, бокс 72</strong></p>
 </div>
 
 <div id="contacts" class="info-window">
     <h2>Контакты для связи</h2>
-    <p style="border: none; color: #94a3b8;">Пожалуйста, пишите в мессенджеры перед звонком, если мастер занят пайкой.</p>
+    <p style="border: none; color: #94a3b8;">Пожалуйста, пишите в мессенджеры перед звонком, если мастер занят паяльными работами.</p>
     <p><span>Телефон / Telegram:</span> <strong>+7 (999) 000-72-72</strong></p>
     <p><span>Режим работы:</span> <strong>Пн-Сб: 10:00 — 20:00</strong></p>
 </div>
