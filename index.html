@@ -18,13 +18,13 @@
         padding: 0 40px; z-index: 100;
     }
 
-    /* ЛОГОТИП: КРУПНЕЕ, СДВИНУТ ПРАВЕЕ И НЕОНОВО-КРАСНЫЙ ПЕРЕЛИВ */
+    /* ЛОГОТИП: НЕОНОВО-КРАСНЫЙ ПЕРЕЛИВ */
     .logo {
-        font-size: 38px; 
+        font-size: 34px; 
         font-weight: 900; 
         letter-spacing: 2px; 
         text-transform: uppercase;
-        margin-left: 30px; 
+        margin-left: 10px; 
         background: linear-gradient(135deg, #fff 10%, #990000 50%, #cc0000 90%);
         background-size: 200% auto;
         -webkit-background-clip: text; 
@@ -38,11 +38,11 @@
         100% { background-position: 0% 50%; }
     }
 
-    .buttons { display: flex; gap: 15px; }
+    .buttons { display: flex; gap: 12px; }
 
     button {
         background: rgba(255, 255, 255, 0.05); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2);
-        padding: 10px 20px; font-size: 14px; border-radius: 8px; cursor: pointer;
+        padding: 10px 18px; font-size: 14px; border-radius: 8px; cursor: pointer;
         transition: all 0.2s ease; font-weight: 700; text-transform: uppercase;
     }
 
@@ -81,6 +81,50 @@
     .info-window p { color: #cbd5e1; font-size: 16px; margin: 14px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px; }
     .info-window p:last-of-type { border-bottom: none; }
     .info-window strong { color: #00f3ff; }
+
+    /* МАКСИМАЛЬНАЯ МОБИЛЬНАЯ АДАПТАЦИЯ (ДЛЯ ТЕЛЕФОНОВ) */
+    @media (max-width: 768px) {
+        .top-panel {
+            flex-direction: column;
+            height: auto;
+            padding: 15px 10px;
+            gap: 12px;
+        }
+        .logo {
+            font-size: 28px;
+            margin-left: 0;
+            text-align: center;
+        }
+        .buttons {
+            width: 100%;
+            justify-content: center;
+            gap: 8px;
+        }
+        button {
+            padding: 8px 14px;
+            font-size: 12px;
+            flex: 1;
+            text-align: center;
+        }
+        .garage-scene {
+            top: 120px;
+            height: calc(100vh - 120px);
+            background-position: 62% center; /* Сдвигаем картинку на смартфонах, чтобы Porsche был по центру */
+        }
+        .info-window {
+            top: 140px;
+            padding: 20px 15px;
+        }
+        .info-window h2 {
+            font-size: 18px;
+        }
+        .info-window p {
+            font-size: 14px;
+            flex-direction: column;
+            gap: 4px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+    }
 </style>
 </head>
 <body>
