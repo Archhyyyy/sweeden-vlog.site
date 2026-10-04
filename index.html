@@ -38,15 +38,20 @@
         100% { background-position: 0% 50%; }
     }
 
-    .buttons { display: flex; gap: 12px; }
+    /* КОНТЕЙНЕР ДЛЯ КНОПОК В ОДНУ ЛИНИЮ */
+    .buttons { display: flex; gap: 12px; align-items: center; }
 
-    button {
+    /* ЕДИНЫЙ СТИЛЬ ДЛЯ ВСЕХ КНОПОК (И ОБЫЧНЫХ, И КНОПОК-ССЫЛОК) */
+    button, .btn-link {
         background: rgba(255, 255, 255, 0.05); color: #e2e8f0; border: 1px solid rgba(255,255,255,0.2);
         padding: 10px 18px; font-size: 14px; border-radius: 8px; cursor: pointer;
         transition: all 0.2s ease; font-weight: 700; text-transform: uppercase;
+        text-decoration: none; display: inline-flex; align-items: center; justify-content: center;
+        white-space: nowrap; height: 40px;
     }
 
-    button:hover {
+    /* ХОВЕР ОДИН В ОДИН КАК В ОРИГИНАЛЕ */
+    button:hover, .btn-link:hover {
         background: #e60000; border-color: #ff5500; color: #fff;
         box-shadow: 0 0 15px rgba(255, 0, 0, 0.4); transform: translateY(-2px);
     }
@@ -82,8 +87,8 @@
     .info-window p:last-of-type { border-bottom: none; }
     .info-window strong { color: #00f3ff; }
 
-    /* МАКСИМАЛЬНАЯ МОБИЛЬНАЯ АДАПТАЦИЯ (ДЛЯ ТЕЛЕФОНОВ) */
-    @media (max-width: 768px) {
+    /* МОБИЛЬНАЯ АДАПТАЦИЯ (СТРОКА КНОПОК ПОД ЛОГОТИПОМ) */
+    @media (max-width: 992px) {
         .top-panel {
             flex-direction: column;
             height: auto;
@@ -97,32 +102,24 @@
         }
         .buttons {
             width: 100%;
+            overflow-x: auto; /* Позволяет скроллить кнопки вбок, если не влезают на мелком экране */
+            padding-bottom: 5px;
             justify-content: center;
             gap: 8px;
         }
-        button {
-            padding: 8px 14px;
-            font-size: 12px;
-            flex: 1;
-            text-align: center;
+        button, .btn-link {
+            padding: 8px 12px;
+            font-size: 11px;
+            height: 34px;
         }
         .garage-scene {
-            top: 120px;
-            height: calc(100vh - 120px);
-            background-position: 62% center; /* Сдвигаем картинку на смартфонах, чтобы Porsche был по центру */
+            top: 145px;
+            height: calc(100vh - 145px);
+            background-position: 62% center;
         }
         .info-window {
-            top: 140px;
+            top: 165px;
             padding: 20px 15px;
-        }
-        .info-window h2 {
-            font-size: 18px;
-        }
-        .info-window p {
-            font-size: 14px;
-            flex-direction: column;
-            gap: 4px;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
     }
 </style>
@@ -136,6 +133,9 @@
         <button onclick="toggleWindow('price')">Прайс</button>
         <button onclick="toggleWindow('location')">Где бокс</button>
         <button onclick="toggleWindow('contacts')">Контакты</button>
+        <!-- ТВОИ ДВЕ НОВЫЕ КНОПКИ РЯДОМ, ОДИН В ОДИН С ДРУГИМИ КНОПКАМИ -->
+        <a href="https://sweeden-vlog.site" class="btn-link">Поиск прошивок</a>
+        <a href="https://sweeden-vlog.site" class="btn-link">Личный кабинет</a>
     </div>
 </div>
 
