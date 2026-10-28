@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Pajalnik 72 — Лаборатория автоэлектроники</title>
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
@@ -40,14 +40,60 @@
     .garage-scene {
         position: absolute; top: 75px; left: 0; width: 100%; height: calc(100vh - 75px);
         background: url('porsche.jpg') center/cover no-repeat; z-index: 1; overflow: hidden;
+        perspective: 1100px; perspective-origin: 50% 40%;
+    }
+    .garage-scene::before {
+        content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none;
+        background: rgba(0,0,0,0.35);
+        animation: garageLight 3.6s ease-out forwards;
+        animation-delay: 0.35s;
+    }
+    @keyframes garageLight {
+        to { background: rgba(0,0,0,0); }
     }
     .garage-gate {
-        position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-        background: repeating-linear-gradient(0deg, #2d3748, #2d3748 30px, #1a202c 30px, #1a202c 60px);
-        border-bottom: 8px solid #00f3ff; box-shadow: 0 10px 30px rgba(0,243,255,0.4);
-        z-index: 10; animation: gateUp 4s cubic-bezier(0.77, 0, 0.175, 1) forwards; animation-delay: 0.5s;
+        position: absolute; inset: 0; z-index: 10;
+        display: flex; flex-direction: column-reverse;
+        box-shadow: 0 16px 48px rgba(0,0,0,0.45);
+        animation: gateHide 0.01s linear 4.3s forwards;
     }
-    @keyframes gateUp { 0% { transform: translateY(0); } 100% { transform: translateY(-100%); } }
+    .gate-slat {
+        flex: 1; min-height: 0;
+        background: linear-gradient(180deg, #596675 0%, #3d4756 38%, #2b3440 100%);
+        border-bottom: 1px solid rgba(0,0,0,0.55);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.18), 0 2px 3px rgba(0,0,0,0.25);
+        transform-origin: bottom center;
+        backface-visibility: hidden;
+        animation: slatRoll 2.9s cubic-bezier(0.45, 0.05, 0.25, 1) forwards;
+        animation-delay: calc(0.45s + var(--n) * 0.07s);
+    }
+    .gate-slat:last-child {
+        border-top: 2px solid rgba(255,255,255,0.12);
+        box-shadow: inset 0 2px 0 rgba(255,255,255,0.22);
+    }
+    .gate-slat:first-child {
+        border-bottom: none;
+        background: linear-gradient(180deg, #4a5568, #2f3845 60%, #252d38);
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.15), 0 0 14px rg
+       ba(0, 170, 190, 0.35);
+    }
+    .gate-slat:first-child::after {
+        content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 4px;
+        background: linear-gradient(90deg, transparent, #008899, #00b8cc, #008899, transparent);
+    }
+    .gate-slat:first-child { position: relative; }
+    @keyframes slatRoll {
+        0% { transform: rotateX(0deg); opacity: 1; }
+        85% { opacity: 1; }
+        100% { transform: rotateX(94deg); opacity: 0; }
+    }
+    @keyframes gateHide { to { visibility: hidden; } }
+    @media (prefers-reduced-motion: reduce) {
+        .garage-gate { display: block; background: #2d3748; animation: gateFade 1.2s ease forwards; animation-delay: 0.3s; }
+        .gate-slat { display: none; }
+        .garage-scene::before { animation: none; background: transparent; }
+        @keyframes gateFade { to { opacity: 0; visibility: hidden; } }
+    }
     .info-window {
         display: none; position: absolute; top: 120px; left: 50%; transform: translateX(-50%);
         width: 90%; max-width: 550px; background: rgba(15, 22, 38, 0.95);
@@ -60,14 +106,47 @@
     .info-window p { color: #cbd5e1; font-size: 16px; margin: 14px 0; display: flex; justify-content: space-between; border-bottom: 1px dashed rgba(255,255,255,0.1); padding-bottom: 8px; }
     .info-window p:last-of-type { border-bottom: none; }
     .info-window strong { color: #00f3ff; }
-    @media (max-width: 992px
-            ) {
-        .top-panel { flex-direction: column; height: auto; padding: 15px 10px; gap: 12px; }
-        .logo { font-size: 28px; margin-left: 0; text-align: center; }
-        .buttons { width: 100%; overflow-x: auto; padding-bottom: 5px; justify-content: center; gap: 8px; }
-        button, .btn-link { padding: 8px 12px; font-size: 11px; height: 34px; }
-        .garage-scene { top: 145px; height: calc(100vh - 145px); background-position: 62% center; }
-        .info-window { top: 165px; padding: 20px 15px; }
+    @media (max-width: 992px) {
+        body { overflow-x: hidden; overflow-y: auto; -webkit-overflow-scrolling: touch; min-height: 100vh; }
+        .top-panel {
+            flex-direction: column; height: auto; gap: 12px;
+            padding: max(12px, env(safe-area-inset-top)) 12px 12px;
+            padding-left: max(12px, env(safe-area-inset-left));
+            padding-right: max(12px, env(safe-area-inset-right));
+        }
+        .logo { font-size: 26px; margin-left: 0; text-align: center; }
+        .buttons {
+            width: 100%; flex-wrap: wrap; justify-content: center; gap: 8px;
+            overflow-x: visible; padding-bottom: 4px;
+        }
+        button, .btn-link {
+            min-height: 44px; padding: 10px 14px; font-size: 12px; height: auto;
+        }
+        .garage-scene {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            height: 100dvh; background-position: 62% center; z-index: 0;
+            perspective: 900px;
+        }
+        .gate-slat {
+            animation-duration: 2.5s;
+            animation-delay: calc(0.35s + var(--n) * 0.055s);
+        }
+        .info-window {
+            position: relative; top: auto; left: auto; transform: none;
+            margin: max(148px, 22vh) auto max(24px, env(safe-area-inset-bottom));
+            width: calc(100% - 24px); max-width: 550px;
+            max-height: none; padding: 22px 16px; z-index: 20;
+            animation: none;
+        }
+        .info-window.active { display: block; }
+    }
+    @media (max-width: 480px) {
+        .info-window p {
+            flex-direction: column; align-items: flex-start; gap: 6px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+        }
+        .info-window p span { padding-right: 0; }
+        .info-window strong { align-self: flex-start; }
     }
 </style>
 </head>
@@ -76,13 +155,19 @@
     <div class="logo">Pajalnik 72</div>
     <div class="buttons">
         <button onclick="toggleWindow('price')">Прайс</button>
-        <button onclick="toggleWindow('location')">Где бокс</button>
+        <button onclick="toggleWin
+           dow('location')">Где бокс</button>
         <button onclick="toggleWindow('contacts')">Контакты</button>
         <a href="https://l.sweeden-vlog.site" class="btn-link">Поиск прошивок</a>
         <a href="https://y.sweeden-vlog.site" class="btn-link">Личный кабинет</a>
     </div>
 </div>
-<div class="garage-scene"><div class="garage-gate"></div></div>
+<div class="garage-scene"><div class="garage-gate" aria-hidden="true">
+<div class="gate-slat" style="--n:0"></div><div class="gate-slat" style="--n:1"></div><div class="gate-slat" style="--n:2"></div>
+<div class="gate-slat" style="--n:3"></div><div class="gate-slat" style="--n:4"></div><div class="gate-slat" style="--n:5"></div>
+<div class="gate-slat" style="--n:6"></div><div class="gate-slat" style="--n:7"></div><div class="gate-slat" style="--n:8"></div>
+<div class="gate-slat" style="--n:9"></div><div class="gate-slat" style="--n:10"></div><div class="gate-slat" style="--n:11"></div>
+</div></div>
 <div id="price" class="info-window">
     <h2>Прайс-лист на услуги</h2>
     <p><span>Диагностика систем и блоков</span> <strong>1 500 ₽</strong></p>
